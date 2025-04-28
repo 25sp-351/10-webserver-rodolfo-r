@@ -1,14 +1,19 @@
 CC = gcc
-CFLAGS = -Wall -Wextra
-LDFLAGS = -lpthread
+CFLAGS = -Wall -Wextra -pthread
+OBJS = webserver.o webserver_functions.o
 
-all: echo_server
+all: webserver
 
-# Multi-threaded version
-echo_server: echo_server.c
-	$(CC) $(CFLAGS) -o echo_server echo_server.c $(LDFLAGS)
+webserver: $(OBJS)
+	$(CC) $(CFLAGS) -o $@ $(OBJS)
+
+webserver.o: webserver.c webserver.h
+	$(CC) $(CFLAGS) -c $
+
+webserver_functions.o: webserver_functions.c webserver.h
+	$(CC) $(CFLAGS) -c $
 
 clean:
-	rm -f echo_server
+	rm -f webserver $(OBJS)
 
 .PHONY: all clean
